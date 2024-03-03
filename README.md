@@ -1,4 +1,8 @@
-# rsfrontend
+# ResonanceFrontend
+雷索纳斯数据统计前端
+Frontend for statistics collection of Resonance Solitice
+
+基于vue3 + ts + axios + pinia + element plus, 施工ing
 
 ## Project setup
 ```
@@ -20,5 +24,3 @@ yarn run build
 yarn run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
