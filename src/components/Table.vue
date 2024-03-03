@@ -1,0 +1,91 @@
+<template>
+  <el-table :data="profitData">
+    <el-table-column label="商品">
+      <el-table-column prop="product_city" label="产地" width="150" />
+      <el-table-column prop="product" label="名称" width="150" />
+      <el-table-column prop="product_price" label="原价" width="60" />
+      <el-table-column prop="product_rate" label="价位" width="60" />
+      <el-table-column prop="product_trend" label="趋势" width="60" />
+    </el-table-column>
+    <el-table-column label="销售地点">
+      <el-table-column
+        v-for="(city, index) in cities"
+        :label="city.name"
+        :key="`product_${index}`"
+      >
+        <el-table-column
+          :prop="`product_${index}_rate`"
+          label="价位"
+          width="60"
+        />
+        <el-table-column
+          :prop="`product_${index}_trend`"
+          label="趋势"
+          width="60"
+        />
+        <el-table-column
+          :prop="`product_${index}_profit`"
+          label="利润"
+          width="60"
+        />
+      </el-table-column>
+    </el-table-column>
+  </el-table>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useStaticStore } from "../stores/static";
+import { useDynamicStore } from "../stores/dynamic";
+
+interface Row extends Record<string, any> {
+  product_city: string;
+  product: string;
+  product_price: number;
+  product_rate: number;
+  product_trend: boolean;
+}
+
+export default defineComponent({
+  name: "DataTable",
+  data() {
+    const staticDataStore = useStaticStore();
+    const dynamicDataStore = useDynamicStore();
+    const cities = storeToRefs(staticDataStore).city_list;
+
+    const profitData = computed(() => {
+      const data = [];
+      const goods = staticDataStore.goods_list;
+      const cities = staticDataStore.goods_list;
+      for (var i = 0; i < goods.length; i++) {
+        const entry: Row = {
+          product_city: cities[goods[i].origin].name,
+          product: goods[i].name,
+          product_price: goods[i].base[goods[i].origin],
+          product_rate: Math.abs(dynamicDataStore.rate[i][goods[i].origin]),
+          product_trend: dynamicDataStore.rate[i][goods[i].origin] > 0,
+        };
+        for (var j = 0; j < cities.length; i++) {
+          entry[`product_${j}_rate`] = Math.abs(dynamicDataStore.rate[i][j]);
+          entry[`product_${j}_trend`] = dynamicDataStore.rate[i][j] > 0;
+          entry[`product_${j}_profit`] =
+            (goods[i].base[j] * Math.abs(dynamicDataStore.rate[i][j]) -
+              goods[i].base[goods[i].origin] *
+                Math.abs(dynamicDataStore.rate[i][goods[i].origin])) /
+            100;
+        }
+        data.push(entry);
+      }
+      return data;
+    });
+
+    return {
+      cities,
+      profitData,
+    };
+  },
+});
+</script>
+
+<style scoped lang="stylus"></style>
