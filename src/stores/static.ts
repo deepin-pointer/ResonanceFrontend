@@ -1,24 +1,6 @@
 import { defineStore } from "pinia";
 import axios, { AxiosResponse } from "axios";
-
-interface City {
-  name: string;
-  note: string;
-  distance: number[];
-}
-
-interface Goods {
-  name: string;
-  note: string;
-  special: boolean;
-  origin: number;
-  base: number[];
-}
-
-interface StaticData {
-  city_list: City[];
-  goods_list: Goods[];
-}
+import { City, Goods, StaticData } from "../interfaces/static";
 
 export const useStaticStore = defineStore({
   id: "city",

@@ -1,12 +1,6 @@
 import { defineStore } from "pinia";
 import axios, { AxiosResponse } from "axios";
 
-// interface PriceRecord {
-//     goods: number;
-//     city: number;
-//     price: number;
-// }
-
 export const useDynamicStore = defineStore({
   id: "city",
   state: (): {

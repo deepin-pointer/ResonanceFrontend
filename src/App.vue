@@ -1,33 +1,39 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import WebHeader from "./components/Header.vue"
+import DataTable from "./components/Table.vue"
+import CityDialog from "./components/CityDialog.vue"
+import GoodsDiaglog from "./components/GoodsDialog.vue"
+import { logo } from "./assets/assets"
+
+const city_dialog = ref(null)
+const goods_dialog = ref(null)
+
+const openCityDialog = () => {
+  if (city_dialog.value){
+    (city_dialog.value as typeof CityDialog).openDialog(-1)
+  }
+}
+
+const openGoodsDialog = () => {
+  if (goods_dialog.value){
+    (goods_dialog.value as typeof CityDialog).openDialog(-1)
+  }
+}
+</script>
+
 <template>
   <el-container>
     <el-header>
-      <WebHeader icon="images/logo.png" title="雷索纳斯市场统计"></WebHeader>
+      <WebHeader :icon="logo" title="雷索纳斯市场统计"></WebHeader>
     </el-header>
     <el-main>
-      <DataTable />
+      <DataTable @city-dialog="openCityDialog" @goods-dialog="openGoodsDialog"/>
     </el-main>
   </el-container>
+  <CityDialog ref="city_dialog"/>
+  <GoodsDiaglog ref="goods_dialog"/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import WebHeader from "./components/Header.vue";
-import DataTable from "./components/Table.vue";
-
-export default defineComponent({
-  name: "App",
-  components: {
-    WebHeader,
-    DataTable,
-  },
-});
-</script>
-
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
+<style scoped>
 </style>
