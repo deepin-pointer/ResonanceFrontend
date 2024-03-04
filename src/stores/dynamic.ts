@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios, { AxiosResponse } from "axios";
+import { postPrice, getDynamicData } from "../apis/backend";
 import { DynamicData } from "../interfaces/dynamic"
 
 export const useDynamicStore = defineStore({
@@ -12,8 +12,7 @@ export const useDynamicStore = defineStore({
     changeValue(row: number, column: number, value: number) {
       this.rate[row][column] = value;
       this.rate[row][column] = Date.now();
-      axios
-        .post<string>("/report_price", {
+      postPrice({
           goods: row,
           city: column,
           price: value,
@@ -23,9 +22,7 @@ export const useDynamicStore = defineStore({
         });
     },
     reloadData(rows: number, columns: number) {
-      return axios
-        .get<ArrayBuffer>(":8000/dynamic")
-        .then((response: AxiosResponse<ArrayBuffer>) => {
+      return getDynamicData().then((response) => {
           if (response.data.byteLength > rows * columns * 16) {
             throw "Dynamic data size error";
           }

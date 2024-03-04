@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios, { AxiosResponse } from "axios";
+import { getStaticData, postNewCity, postNewGoods } from "../apis/backend";
 import { City, Goods, StaticData } from "../interfaces/static";
 
 export const useStaticStore = defineStore({
@@ -18,20 +18,18 @@ export const useStaticStore = defineStore({
         this.city_list[i].distance.push(record.distance[i]);
       }
       this.city_list.push(record);
-      axios.post<string>(":8000/new_city", record).catch((error) => {
+      postNewCity(record).catch((error) => {
         console.error(error);
       });
     },
     addGoods(record: Goods) {
       this.goods_list.push(record);
-      axios.post<string>(":8000/new_goods", record).catch((error) => {
+      postNewGoods(record).catch((error) => {
         console.error(error);
       });
     },
     reloadData() {
-      return axios
-        .get<StaticData>(":8000/static")
-        .then((response: AxiosResponse<StaticData>) => {
+      return getStaticData().then((response) => {
           this.city_list = response.data.city_list||[];
           this.goods_list = response.data.goods_list||[];
         })
