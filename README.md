@@ -1,4 +1,4 @@
-# rsfrontend
+# ResonanceFrontend
 
 雷索纳斯数据统计前端
 
