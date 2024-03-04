@@ -34,7 +34,7 @@ export default defineComponent({
     const profitData = computed(() => {
       const data = [];
       const goods = staticDataStore.goods_list;
-      const cities = staticDataStore.goods_list;
+      const cities = staticDataStore.city_list;
       for (var i = 0; i < goods.length; i++) {
         const entry: TableRow = {
           goods_city: cities[goods[i].origin].name,

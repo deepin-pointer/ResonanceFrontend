@@ -1,12 +1,10 @@
 import { defineStore } from "pinia";
 import axios, { AxiosResponse } from "axios";
+import { DynamicData } from "../interfaces/dynamic"
 
 export const useDynamicStore = defineStore({
   id: "city",
-  state: (): {
-    rate: number[][];
-    timestamp: Date[][];
-  } => ({
+  state: (): DynamicData => ({
     rate: [],
     timestamp: [],
   }),
@@ -25,16 +23,11 @@ export const useDynamicStore = defineStore({
         });
     },
     reloadData(rows: number, columns: number) {
-      axios
-        .get<ArrayBuffer>("/dynamic")
+      return axios
+        .get<ArrayBuffer>(":8000/dynamic")
         .then((response: AxiosResponse<ArrayBuffer>) => {
-          if (response.data.byteLength != rows * columns * 16) {
-            console.error(
-              `Data size mismatch, expecting ${rows * columns * 16}, but got ${
-                response.data.byteLength
-              }.`
-            );
-            return;
+          if (response.data.byteLength > rows * columns * 16) {
+            throw "Dynamic data size error";
           }
           const data = new BigInt64Array(response.data);
           for (let i = 0; i < rows; i++) {
@@ -56,9 +49,6 @@ export const useDynamicStore = defineStore({
               }
             }
           }
-        })
-        .catch((error) => {
-          console.error(error);
         });
     },
   },

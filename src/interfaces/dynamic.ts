@@ -3,3 +3,8 @@ export interface PriceRecord {
   city: number;
   price: number;
 }
+
+export interface DynamicData {
+  rate: number[][];
+  timestamp: Date[][];
+}

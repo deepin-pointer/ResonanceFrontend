@@ -9,8 +9,8 @@ export interface Goods {
   note: string;
   special: boolean;
   origin: number;
+  count: number;
   base: number[];
-  count: number[];
 }
 
 export interface StaticData {
