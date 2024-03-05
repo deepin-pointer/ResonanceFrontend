@@ -16,14 +16,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="基础数量">
-        <el-input v-model="form.count" autocomplete="off" />
+        <el-input-number v-model="form.count" autocomplete="off" controls=""/>
       </el-form-item>
       <el-table :data="form.info" border stripe>
         <el-table-column label="城市" prop="city" />
         <el-table-column label="基础价格">
           <template #default="scope">
             <el-form-item v-if="scope && scope.$index >= 0" label=" " :prop="`form.info.${scope.$index}.base`">
-              <el-input v-model="scope.row.amount"></el-input>
+              <el-input-number v-model="scope.row.base" controls=""/>
             </el-form-item>
           </template>
         </el-table-column>

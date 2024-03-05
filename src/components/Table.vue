@@ -36,6 +36,8 @@ export default defineComponent({
       const goods = staticDataStore.goods_list;
       const cities = staticDataStore.city_list;
       for (var i = 0; i < goods.length; i++) {
+        if(dynamicDataStore.rate.length<=i)
+          break;
         const entry: TableRow = {
           goods_city: cities[goods[i].origin].name,
           goods: goods[i].name,
@@ -44,6 +46,8 @@ export default defineComponent({
           goods_trend: dynamicDataStore.rate[i][goods[i].origin] > 0,
         };
         for (var j = 0; j < cities.length; i++) {
+          if(dynamicDataStore.rate[i].length<=j)
+            break;
           entry[`goods_${j}_rate`] = Math.abs(dynamicDataStore.rate[i][j]);
           entry[`goods_${j}_trend`] = dynamicDataStore.rate[i][j] > 0;
           entry[`goods_${j}_profit`] =
