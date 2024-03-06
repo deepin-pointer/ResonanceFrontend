@@ -49,7 +49,7 @@ import { ElMessage } from 'element-plus'
 import { Goods } from "../interfaces/static";
 
 export default defineComponent({
-  name: "WebHeader",
+  name: "GoodDialog",
   data() {
     const staticDataStore = useStaticStore();
     const visible = ref(false);

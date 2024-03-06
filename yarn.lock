@@ -675,6 +675,11 @@ js-cookie@^3.0.1:
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.5.tgz#0b7e2fd0c01552c58ba86e0841f94dc2557dcdbc"
   integrity sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==
 
+jssha@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jssha/-/jssha-3.3.1.tgz#c5b7fc7fb9aa745461923b87df0e247dd59c7ea8"
+  integrity sha512-VCMZj12FCFMQYcFLPRm/0lOBbLi8uM2BhXPTqw3U4YAfs4AZfiApOoBLoN8cQE60Z50m1MYMTQVCfgF/KaCVhQ==
+
 lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"

@@ -38,7 +38,7 @@ import { City } from "../interfaces/static";
 import { ElMessage } from "element-plus";
 
 export default defineComponent({
-  name: "WebHeader",
+  name: "CityDialog",
   data() {
     const staticDataStore = useStaticStore();
     const visible = ref(false);
