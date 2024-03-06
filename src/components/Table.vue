@@ -1,5 +1,5 @@
 <template>
-  <el-table @header-click="headerClick" :data="profitData">
+  <el-table @header-click="headerClick" :data="profitData" height="250" style="width: 100%">
     <el-table-column label="商品">
       <el-table-column prop="goods_city" label="产地" width="150" />
       <el-table-column prop="goods" label="名称" width="150" />
@@ -8,7 +8,7 @@
       <el-table-column prop="goods_trend" label="趋势" width="60" fixed="left" />
     </el-table-column>
     <el-table-column label="销售地点">
-      <el-table-column v-for="(city, index) in cities" :label="city.name" :key="`goods_${index}`">
+      <el-table-column v-for="(city, index) in staticDataStore.city_list" :label="city.name" :key="`goods_${index}`">
         <el-table-column :prop="`goods_${index}_rate`" label="价位" width="60" />
         <el-table-column :prop="`goods_${index}_trend`" label="趋势" width="60" />
         <el-table-column :prop="`goods_${index}_profit`" label="利润" width="60" />
@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { storeToRefs } from "pinia";
 import { useStaticStore } from "../stores/static";
 import { useDynamicStore } from "../stores/dynamic";
 import { TableRow } from "../interfaces/view";
@@ -29,7 +28,6 @@ export default defineComponent({
   data() {
     const staticDataStore = useStaticStore();
     const dynamicDataStore = useDynamicStore();
-    const cities = storeToRefs(staticDataStore).city_list;
 
     const profitData = computed(() => {
       const data = [];
@@ -45,7 +43,7 @@ export default defineComponent({
           goods_rate: Math.abs(dynamicDataStore.rate[i][goods[i].origin]),
           goods_trend: dynamicDataStore.rate[i][goods[i].origin] > 0,
         };
-        for (var j = 0; j < cities.length; i++) {
+        for (var j = 0; j < cities.length; j++) {
           if(dynamicDataStore.rate[i].length<=j)
             break;
           entry[`goods_${j}_rate`] = Math.abs(dynamicDataStore.rate[i][j]);
@@ -70,8 +68,8 @@ export default defineComponent({
     }
 
     return {
-      cities,
       profitData,
+      staticDataStore,
       headerClick,
     };
   },

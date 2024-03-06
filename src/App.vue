@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useDark } from "@vueuse/core";
 import { useRequest } from 'vue-hooks-plus'
 import WebHeader from "./components/Header.vue"
 import DataTable from "./components/Table.vue"
@@ -9,28 +10,33 @@ import { useStaticStore } from "./stores/static";
 import { useDynamicStore } from "./stores/dynamic";
 import { logo } from "./assets/assets"
 
+useDark();
+
 const staticDataStore = useStaticStore();
 const dynamicDataStore = useDynamicStore();
 
-staticDataStore.reloadData();
-
-function reloadDynamicData() {
-  const city_num= staticDataStore.city_list.length;
-  const goods_num= staticDataStore.goods_list.length;
-  if(city_num>0 && goods_num>0)
-    return dynamicDataStore.reloadData(goods_num, city_num).catch((error)=>{
-      if(error==="Dynamic data size error")
-        staticDataStore.reloadData()
-    });
-  else
-    return new Promise(()=>{})
+function reloadDynamicData():Promise<null> {
+  return new Promise((resolve)=>{
+    const city_num= staticDataStore.city_list.length;
+    const goods_num= staticDataStore.goods_list.length;
+    if(city_num>0 && goods_num>0)
+      dynamicDataStore.reloadData(goods_num, city_num).then(()=>{
+        resolve(null)
+      }).catch((error)=>{
+        if(error==="Dynamic data size error")
+          staticDataStore.reloadData()
+      });
+    else
+      resolve(null);
+  })
 }
 
-useRequest(reloadDynamicData,{
-  pollingInterval: 5000,
-  pollingWhenHidden: false,
+staticDataStore.reloadData().then(()=>{
+  useRequest(reloadDynamicData,{
+    pollingInterval: 5000,
+    pollingWhenHidden: false,
+  })
 })
-
 const city_dialog = ref(null)
 const goods_dialog = ref(null)
 

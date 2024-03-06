@@ -3,7 +3,7 @@ import { postPrice, getDynamicData } from "../apis/backend";
 import { DynamicData } from "../interfaces/dynamic"
 
 export const useDynamicStore = defineStore({
-  id: "city",
+  id: "dynamic",
   state: (): DynamicData => ({
     rate: [],
     timestamp: [],

@@ -3,7 +3,7 @@ import { getStaticData, postNewCity, postNewGoods } from "../apis/backend";
 import { City, Goods, StaticData } from "../interfaces/static";
 
 export const useStaticStore = defineStore({
-  id: "city",
+  id: "static",
   state: (): StaticData => ({
     city_list: [],
     goods_list: [],

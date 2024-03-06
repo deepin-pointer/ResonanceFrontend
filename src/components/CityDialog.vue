@@ -12,7 +12,7 @@
         <el-table-column label="距离">
           <template #default="scope">
             <el-form-item v-if="scope && scope.$index >= 0" label=" " :prop="`form.distance.${scope.$index}.distance`">
-              <el-input-number v-model="scope.row.distance" :controls="false" :min="1" :precision="0"/>
+              <el-input-number v-model="scope.row.distance" :controls="false" :min="0" :precision="0"/>
             </el-form-item>
           </template>
         </el-table-column>
